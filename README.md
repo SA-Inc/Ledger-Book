@@ -1,5 +1,5 @@
 # Ledger Book
-Simple Database to store Ledger Records and get reports of Money Stash. Created for SQLite DB
+Simple Database to store Ledger Records and get reports of Money Stash. All values are in common currency unit (EuroDollar). Created for SQLite DB
 
 
 # Database Structure
