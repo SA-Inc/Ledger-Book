@@ -73,6 +73,20 @@ FROM ledger
 GROUP BY strftime('%Y-%m', date)
 ```
 
+## Total Sum by Years
+```sql
+SELECT strftime('%Y', date) AS 'date', COUNT(*) AS 'records', SUM(amount) AS 'sum'
+FROM ledger
+GROUP BY strftime('%Y', date)
+```
+
+## Total Sum by Year and Month
+```sql
+SELECT strftime('%Y-%m', date) AS 'date', COUNT(*) AS 'records', SUM(amount) AS 'sum'
+FROM ledger
+GROUP BY strftime('%Y-%m', date)
+```
+
 
 # All Ledger Records
 ## Select all Ledger Records (with Pagination)
@@ -93,4 +107,39 @@ ORDER BY id ASC
 LIMIT 100 OFFSET 0
 ```
 
+## Filter by Year Month Sum
+```
+SELECT strftime('%Y-%m', date) AS 'Year', COUNT(*) AS 'Rows', SUM(amount) AS 'Sum'
+FROM ledger
+GROUP BY strftime('%Y-%m', date)
+HAVING SUM(amount) > 500
+ORDER BY SUM(amount) DESC
+```
 
+
+# Balances
+## Ledger Records running Balance
+```sql
+SELECT id, "date", amount,
+  SUM(amount) OVER (ORDER BY id) AS 'balance'
+FROM ledger
+```
+
+## Select Ledger Records running Balance and Difference
+```sql
+WITH ledger_balance AS (
+  SELECT id, "date", amount,
+    SUM(amount) OVER (ORDER BY id) AS 'current_balance'
+  FROM ledger
+),
+ledger_balance_previous AS (
+  SELECT id, "date", amount, current_balance,
+    LAG(current_balance, 1, 0) OVER (ORDER BY id) AS 'previous_balance'
+  FROM ledger_balance
+)
+
+SELECT id, "date", amount, current_balance, previous_balance,
+  COALESCE((current_balance - previous_balance), 0) AS 'difference',
+  ROUND(COALESCE(100.0 * (current_balance - previous_balance) / previous_balance, 0), 2) AS 'difference_perc'
+FROM ledger_balance_previous
+```
