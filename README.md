@@ -108,7 +108,7 @@ LIMIT 100 OFFSET 0
 ```
 
 ## Filter by Year Month Sum
-```
+```sql
 SELECT strftime('%Y-%m', date) AS 'Year', COUNT(*) AS 'Rows', SUM(amount) AS 'Sum'
 FROM ledger
 GROUP BY strftime('%Y-%m', date)
