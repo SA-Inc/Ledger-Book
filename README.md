@@ -46,7 +46,8 @@ FROM ledger
 
 ## Total Income/Outcome
 ```sql
-SELECT 'date' AS 'date', COUNT(*) AS 'records',
+SELECT
+  COUNT(*) AS 'records',
   SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS 'minus',
   SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS 'plus',
   SUM(amount) AS 'sum'
@@ -55,7 +56,9 @@ FROM ledger
 
 ## Year Income/Outcome
 ```sql
-SELECT strftime('%Y', date) AS 'date', COUNT(*) AS 'records',
+SELECT
+  strftime('%Y', date) AS 'date',
+  COUNT(*) AS 'records',
   SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS 'minus',
   SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS 'plus',
   SUM(amount) AS 'sum'
@@ -65,7 +68,9 @@ GROUP BY strftime('%Y', date)
 
 ## Year and Month Income/Outcome
 ```sql
-SELECT strftime('%Y-%m', date) AS 'date', COUNT(*) AS 'records',
+SELECT
+  strftime('%Y-%m', date) AS 'date',
+  COUNT(*) AS 'records',
   SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS 'minus',
   SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS 'plus',
   SUM(amount) AS 'sum'
@@ -75,14 +80,20 @@ GROUP BY strftime('%Y-%m', date)
 
 ## Total Sum by Years
 ```sql
-SELECT strftime('%Y', date) AS 'date', COUNT(*) AS 'records', SUM(amount) AS 'sum'
+SELECT
+  strftime('%Y', date) AS 'date',
+  COUNT(*) AS 'records',
+  SUM(amount) AS 'sum'
 FROM ledger
 GROUP BY strftime('%Y', date)
 ```
 
 ## Total Sum by Year and Month
 ```sql
-SELECT strftime('%Y-%m', date) AS 'date', COUNT(*) AS 'records', SUM(amount) AS 'sum'
+SELECT
+  strftime('%Y-%m', date) AS 'date',
+  COUNT(*) AS 'records',
+  SUM(amount) AS 'sum'
 FROM ledger
 GROUP BY strftime('%Y-%m', date)
 ```
@@ -109,7 +120,10 @@ LIMIT 100 OFFSET 0
 
 ## Filter by Year Month Sum
 ```sql
-SELECT strftime('%Y-%m', date) AS 'Year', COUNT(*) AS 'Rows', SUM(amount) AS 'Sum'
+SELECT
+  strftime('%Y-%m', date) AS 'Year',
+  COUNT(*) AS 'Rows',
+  SUM(amount) AS 'Sum'
 FROM ledger
 GROUP BY strftime('%Y-%m', date)
 HAVING SUM(amount) > 500
