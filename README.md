@@ -125,15 +125,14 @@ GROUP BY strftime('%Y-%m', date)
 ### PostgreSQL
 ```sql
 SELECT
-  EXTRACT(YEAR FROM date) AS "year",
-  EXTRACT(MONTH FROM date) AS "month",
+  CONCAT(EXTRACT(YEAR FROM date), '-', LPAD(EXTRACT(MONTH FROM date)::text, 2, '0')) AS "date",
   COUNT(*) AS "records",
   SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "minus",
   SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS "plus",
   SUM(amount) AS "sum"
 FROM ledger
-GROUP BY "year", "month"
-ORDER BY "year", "month"
+GROUP BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date)
+ORDER BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date)
 ```
 
 ## Total Sum by Years
