@@ -63,6 +63,21 @@ SELECT
 FROM ledger
 ```
 
+## First and Last Date
+```sql
+SELECT "date" AS "first_date"
+FROM ledger
+ORDER BY "date" ASC
+LIMIT 1
+```
+
+```sql
+SELECT "date" AS "last_date"
+FROM ledger
+ORDER BY "date" DESC
+LIMIT 1
+```
+
 ## Total Income/Outcome
 ### SQLite
 ```sql
