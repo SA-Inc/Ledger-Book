@@ -1,15 +1,25 @@
 # Ledger Book
-Simple Database to store Ledger Records and get reports of Money Stash. All values are in common currency unit (EuroDollar). Created for SQLite DB
+Simple Database to store Ledger Records and get reports of Money Stash. All values are in common currency unit (EuroDollar). Created for SQLite DB and PostgreSQL
 
 
 # Database Structure
 ## Create Table Structure
+### SQLite
 ```sql
 CREATE TABLE "ledger" (
   "id" INTEGER,
   "date" TEXT NOT NULL,
   "amount" INTEGER NOT NULL,
   PRIMARY KEY("id" AUTOINCREMENT)
+)
+```
+
+### PostgreSQL
+```sql
+CREATE TABLE "ledger" (
+  "id" SERIAL PRIMARY KEY,
+  "date" DATE NOT NULL,
+  "amount" INT NOT NULL
 )
 ```
 
@@ -37,6 +47,7 @@ WHERE id = 23
 
 # Overview
 ## Count Total Rows and Unique Dates
+### SQLite
 ```sql
 SELECT
   COUNT(date) AS 'total_rows',
@@ -44,7 +55,16 @@ SELECT
 FROM ledger
 ```
 
+### PostgreSQL
+```sql
+SELECT
+  COUNT(date) AS "total_rows"
+  COUNT(DISTINCT date) AS "unique_dates"
+FROM ledger
+```
+
 ## Total Income/Outcome
+### SQLite
 ```sql
 SELECT
   COUNT(*) AS 'records',
@@ -54,7 +74,18 @@ SELECT
 FROM ledger
 ```
 
+### PostgreSQL
+```sql
+SELECT
+  COUNT(*) AS "records",
+  SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "minus",
+  SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS "plus",
+  SUM(amount) AS "sum"
+FROM ledger
+```
+
 ## Year Income/Outcome
+### SQLite
 ```sql
 SELECT
   strftime('%Y', date) AS 'date',
@@ -66,7 +97,20 @@ FROM ledger
 GROUP BY strftime('%Y', date)
 ```
 
+### PostgreSQL
+```sql
+SELECT
+  EXTRACT(YEAR FROM date) AS "date",
+  COUNT(*) AS "records",
+  SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "minus",
+  SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS "plus",
+  SUM(amount) AS "sum"
+FROM ledger
+GROUP BY EXTRACT(YEAR FROM date)
+```
+
 ## Year and Month Income/Outcome
+### SQLite
 ```sql
 SELECT
   strftime('%Y-%m', date) AS 'date',
@@ -76,6 +120,20 @@ SELECT
   SUM(amount) AS 'sum'
 FROM ledger
 GROUP BY strftime('%Y-%m', date)
+```
+
+### PostgreSQL
+```sql
+SELECT
+  EXTRACT(YEAR FROM date) AS "year",
+  EXTRACT(MONTH FROM date) AS "month",
+  COUNT(*) AS "records",
+  SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "minus",
+  SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS "plus",
+  SUM(amount) AS "sum"
+FROM ledger
+GROUP BY "year", "month"
+ORDER BY "year", "month"
 ```
 
 ## Total Sum by Years
