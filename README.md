@@ -16,6 +16,10 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
   - [Insert Ledger Record](#insert-ledger-record)
   - [Delete Ledger Record](#delete-ledger-record)
   - [Update Ledger Record](#update-ledger-record)
+- [Overview](#overview)
+  - [Current Balance](#current-balance)
+  - [Total Income](#total-income)
+  - [Total Outcome](#total-outcome)
 
 # Database Structure
 ## Create Table Structure
@@ -62,4 +66,27 @@ WHERE id = 52
 UPDATE ledger
 SET "date" = '2022-06-25', "amount" = '1000'
 WHERE id = 23
+```
+
+# Overview
+Uses in big Numbers in Grafana
+## Current Balance
+```sql
+SELECT
+  SUM(amount) AS "balance"
+FROM ledger
+```
+
+## Total Income
+```sql
+SELECT
+  SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS "income"
+FROM ledger
+```
+
+## Total Outcome
+```sql
+SELECT
+  SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "outcome"
+FROM ledger
 ```
