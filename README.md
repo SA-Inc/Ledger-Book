@@ -23,6 +23,9 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
   - [Total Transactions](#total-transactions)
   - [Total Income Transactions](#total-income-transactions)
   - [Total Outcome Transactions](#total-outcome-transactions)
+  - [Unique Transaction Dates](#unique-transaction-dates)
+  - [First Transaction Date](#first-transaction-date)
+  - [Last Transaction Date](#last-transaction-date)
 
 # Database Structure
 ## Create Table Structure
@@ -113,4 +116,39 @@ FROM ledger
 SELECT
   SUM(CASE WHEN amount < 0 THEN 1 ELSE 0 END) AS "total_outcome_transactions"
 FROM ledger
+```
+
+## Unique Transaction Dates
+```sql
+SELECT
+  COUNT(DISTINCT date) AS "unique_transaction_dates"
+FROM ledger
+```
+
+## First Transaction Date
+```sql
+SELECT
+  CONCAT(
+    EXTRACT(
+      YEAR FROM date), '-',
+      LPAD(EXTRACT(MONTH FROM date)::text, 2, '0'), '-',
+      LPAD(EXTRACT(DAY FROM date)::text, 2, '0')
+  ) AS "first_transaction_date"
+FROM ledger
+ORDER BY "date" ASC
+LIMIT 1
+```
+
+## Last Transaction Date
+```sql
+SELECT
+  CONCAT(
+    EXTRACT(
+      YEAR FROM date), '-',
+      LPAD(EXTRACT(MONTH FROM date)::text, 2, '0'), '-',
+      LPAD(EXTRACT(DAY FROM date)::text, 2, '0')
+  ) AS "last_transaction_date"
+FROM ledger
+ORDER BY "date" DESC
+LIMIT 1
 ```
