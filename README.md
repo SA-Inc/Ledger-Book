@@ -164,6 +164,8 @@ LIMIT 1
 # Pivot Tables
 ## Running Balance
 
+Shows Running Balance (Running Total/Cumulative Sum/Prefix Sum) and Delta in Percents between current and previous Running Balances
+
 ![Running Balance](https://github.com/SA-Inc/Ledger-Book/blob/main/img/Running%20Balance.png)
 
 *Field difference is commented because is actualy amount*
