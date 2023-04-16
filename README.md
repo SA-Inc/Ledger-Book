@@ -9,6 +9,14 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
 - PostgREST (if need HTTP Interface for PostgreSQL)
 - Grafana
 
+#####  Table of Contents
+- [Database Structure](#database-structure)
+  - [Create Table Structure](#create-table-structure)
+- [Data Manipulation](#data-manipulation)
+  - [Insert Ledger Record](#insert-ledger-record)
+  - [Delete Ledger Record](#delete-ledger-record)
+  - [Update Ledger Record](#dpdate-ledger-record)
+
 # Database Structure
 ## Create Table Structure
 
