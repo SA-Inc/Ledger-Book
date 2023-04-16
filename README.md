@@ -75,7 +75,11 @@ WHERE id = 23
 ```
 
 # Overview
-Uses in big Numbers in Grafana
+
+*The main Approach is quick get main Measurements and using in big Numbers in Grafana*
+
+![Ledger Overview](https://github.com/SA-Inc/Ledger-Book/blob/main/img/Ledger%20Overview.png)
+
 ## Current Balance
 ```sql
 SELECT
