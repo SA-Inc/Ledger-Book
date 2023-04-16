@@ -20,6 +20,9 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
   - [Current Balance](#current-balance)
   - [Total Income](#total-income)
   - [Total Outcome](#total-outcome)
+  - [Total Transactions](#total-transactions)
+  - [Total Income Transactions](#total-income-transactions)
+  - [Total Outcome Transactions](#total-outcome-transactions)
 
 # Database Structure
 ## Create Table Structure
@@ -88,5 +91,26 @@ FROM ledger
 ```sql
 SELECT
   SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "outcome"
+FROM ledger
+```
+
+## Total Transactions
+```sql
+SELECT
+  COUNT(date) AS "total_transactions"
+FROM ledger
+```
+
+## Total Income Transactions
+```sql
+SELECT
+  SUM(CASE WHEN amount > 0 THEN 1 ELSE 0 END) AS "total_income_transactions"
+FROM ledger
+```
+
+## Total Outcome Transactions
+```sql
+SELECT
+  SUM(CASE WHEN amount < 0 THEN 1 ELSE 0 END) AS "total_outcome_transactions"
 FROM ledger
 ```
