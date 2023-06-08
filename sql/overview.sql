@@ -62,12 +62,7 @@ WHERE account_id = $get_accounts
 
 
 -- First Transaction Date
-SELECT
-  CONCAT(
-	  EXTRACT(YEAR FROM date), '-',
-    LPAD(EXTRACT(MONTH FROM date)::text, 2, '0'), '-',
-    LPAD(EXTRACT(DAY FROM date)::text, 2, '0')
-  ) AS "first_transaction_date"
+SELECT "date" AS "first_transaction_date"
 FROM "transaction"
 WHERE account_id = $get_accounts
 ORDER BY "date" ASC
@@ -83,12 +78,7 @@ LIMIT 1
 
 
 -- Last Transaction Date
-SELECT
-  CONCAT(
-	  EXTRACT(YEAR FROM date), '-',
-    LPAD(EXTRACT(MONTH FROM date)::text, 2, '0'), '-',
-    LPAD(EXTRACT(DAY FROM date)::text, 2, '0')
-  ) AS "last_transaction_date"
+SELECT "date" AS "last_transaction_date"
 FROM "transaction"
 WHERE account_id = $get_accounts
 ORDER BY "date" DESC
