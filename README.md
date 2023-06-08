@@ -59,58 +59,10 @@ Shows Running Balance (Running Total/Cumulative Sum/Prefix Sum) and Delta in Per
 
 ![Running Balance](https://github.com/SA-Inc/Ledger-Book/blob/main/img/Running%20Balance.png)
 
-*Field difference is commented because is actualy amount*
-
-```sql
-SELECT
-  CONCAT(EXTRACT(YEAR FROM date), '-', LPAD(EXTRACT(MONTH FROM date)::text, 2, '0'), '-', LPAD(EXTRACT(DAY FROM date)::text, 2, '0')) AS "date",
-  "amount",
-  "balance",
--- COALESCE(("balance" - "previous_balance"), 0) AS "difference",
-  CASE WHEN "previous_balance" = 0
-    THEN 0
-    ELSE ROUND(COALESCE(100.0 * ("balance" - "previous_balance") / "previous_balance", 0), 2)
-    END AS "delta"
-FROM (
-  SELECT "id", "date", "amount", "balance",
-  LAG("balance", 1, 0) OVER (ORDER BY "id") AS "previous_balance"
-  FROM (
-    SELECT "id", "date", "amount",
-      SUM(amount) OVER (ORDER BY "id") AS "balance"
-    FROM ledger
-    ORDER BY id ASC
-  ) s
-)f
-```
-
 ## Year Income Outcome
 
 ![Running Balance](https://github.com/SA-Inc/Ledger-Book/blob/main/img/Year%20Income%20Outcome.png)
 
-```sql
-SELECT
-  EXTRACT(YEAR FROM date) AS "year",
-  COUNT("id") AS "transactions",
-  SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "outcome",
-  SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS "income",
-  SUM(amount) AS "sum"
-FROM ledger
-GROUP BY EXTRACT(YEAR FROM date)
-ORDER BY "year" ASC
-```
-
 ## Year Month Income Outcome
 
 ![Running Balance](https://github.com/SA-Inc/Ledger-Book/blob/main/img/Year%20Month%20Income%20Outcome.png)
-
-```sql
-SELECT
-  CONCAT(EXTRACT(YEAR FROM date), '-', LPAD(EXTRACT(MONTH FROM date)::text, 2, '0')) AS "date",
-  COUNT("id") AS "transactions",
-  SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "outcome",
-  SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS "income",
-  SUM(amount) AS "sum"
-FROM ledger
-GROUP BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date)
-ORDER BY EXTRACT(YEAR FROM date), EXTRACT(MONTH FROM date)
-```
