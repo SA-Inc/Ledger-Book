@@ -11,11 +11,8 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
 
 ##  Table of Contents
 - [Database Structure](#database-structure)
-  - [Create Table Structure](#create-table-structure)
-- [Data Manipulation](#data-manipulation)
-  - [Insert Ledger Record](#insert-ledger-record)
-  - [Delete Ledger Record](#delete-ledger-record)
-  - [Update Ledger Record](#update-ledger-record)
+  - [Account](#account)
+  - [Transaction](#transaction)
 - [Overview](#overview)
   - [Current Balance](#current-balance)
   - [Total Income](#total-income)
