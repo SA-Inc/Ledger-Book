@@ -36,7 +36,7 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
 
 *The main Approach is quick get main Measurements and using in big Numbers in Grafana*
 
-![Ledger Overview](https://github.com/SA-Inc/Ledger-Book/blob/main/img/Ledger%20Overview.png)
+![Ledger Overview](https://github.com/SA-Inc/Ledger-Book/blob/main/img/Ledger%20Overview.png?raw=true)
 
 - Account Currency
 - Total Transactions
