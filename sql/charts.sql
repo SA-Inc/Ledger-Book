@@ -3,8 +3,15 @@ SELECT
   "date",
   CASE WHEN amount < 0 THEN amount ELSE 0 END AS "outcome",
   CASE WHEN amount > 0 THEN amount ELSE 0 END AS "income"
-FROM "transaction"
-WHERE account_id = $get_accounts
+FROM (
+  SELECT
+    "date",
+    SUM(amount) AS "amount"
+  FROM "transaction"
+  WHERE account_id = $get_accounts
+  GROUP BY "date"
+  ORDER BY "date" ASC
+) s
 
 
 -- Income/Outcome Pie Chart
