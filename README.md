@@ -32,51 +32,17 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
   - [Year Month Income Outcome](#year-month-income-outcome)
 
 # Database Structure
-## Create Table Structure
-
+## Account
 - id - auto inc Value
-- date - ISO 8601 Date (YYYY-MM-DD)
+- name - text Value
+- currency - text Value
+
+## Transaction
+- id - auto inc Value
+- account_id - link to Account Entity
+- date - ISO 8601 Date (YYYY-MM-DD), without Time
 - amount - only Integer (Why count Сents?)
 
-### SQLite
-```sql
-CREATE TABLE "ledger" (
-  "id" INTEGER,
-  "date" TEXT NOT NULL,
-  "amount" INTEGER NOT NULL,
-  PRIMARY KEY("id" AUTOINCREMENT)
-)
-```
-
-### PostgreSQL
-```sql
-CREATE TABLE "ledger" (
-  "id" SERIAL PRIMARY KEY,
-  "date" DATE NOT NULL,
-  "amount" INT NOT NULL
-)
-```
-
-
-# Data Manipulation 
-## Insert Ledger Record
-```sql
-INSERT INTO ledger ("date", amount)
-VALUES ('2022-06-25', -18)
-```
-
-## Delete Ledger Record
-```sql
-DELETE FROM ledger
-WHERE id = 52
-```
-
-## Update Ledger Record
-```sql
-UPDATE ledger
-SET "date" = '2022-06-25', "amount" = '1000'
-WHERE id = 23
-```
 
 # Overview
 
