@@ -20,6 +20,9 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
   - [Year Month Income Outcome](#year-month-income-outcome)
 
 # Database Structure
+
+![Ledger Scheme](https://github.com/SA-Inc/Ledger-Book/blob/main/img/ledger_scheme.png?raw=true)
+
 ## Account
 - id - auto inc Value
 - name - text Value
