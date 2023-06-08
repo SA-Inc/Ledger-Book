@@ -47,82 +47,19 @@ Simple Database to store Ledger Records and get reports of Money Stash. All valu
 
 ![Ledger Overview](https://github.com/SA-Inc/Ledger-Book/blob/main/img/Ledger%20Overview.png)
 
-## Current Balance
-```sql
-SELECT
-  SUM(amount) AS "balance"
-FROM ledger
-```
+- Account Currency
+- Total Transactions
+- Last Transaction Type
+- Current Balance
+- Total Outcome
+- Total Income
+- Total Outcome Transactions
+- Total Income Transactions
+- Unique Transaction Dates
+- First Transaction Date
+- Last Transaction Date
+- Days of Last Transaction
 
-## Total Income
-```sql
-SELECT
-  SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS "income"
-FROM ledger
-```
-
-## Total Outcome
-```sql
-SELECT
-  SUM(CASE WHEN amount < 0 THEN amount ELSE 0 END) AS "outcome"
-FROM ledger
-```
-
-## Total Transactions
-```sql
-SELECT
-  COUNT(date) AS "total_transactions"
-FROM ledger
-```
-
-## Total Income Transactions
-```sql
-SELECT
-  SUM(CASE WHEN amount > 0 THEN 1 ELSE 0 END) AS "total_income_transactions"
-FROM ledger
-```
-
-## Total Outcome Transactions
-```sql
-SELECT
-  SUM(CASE WHEN amount < 0 THEN 1 ELSE 0 END) AS "total_outcome_transactions"
-FROM ledger
-```
-
-## Unique Transaction Dates
-```sql
-SELECT
-  COUNT(DISTINCT date) AS "unique_transaction_dates"
-FROM ledger
-```
-
-## First Transaction Date
-```sql
-SELECT
-  CONCAT(
-    EXTRACT(
-      YEAR FROM date), '-',
-      LPAD(EXTRACT(MONTH FROM date)::text, 2, '0'), '-',
-      LPAD(EXTRACT(DAY FROM date)::text, 2, '0')
-  ) AS "first_transaction_date"
-FROM ledger
-ORDER BY "date" ASC
-LIMIT 1
-```
-
-## Last Transaction Date
-```sql
-SELECT
-  CONCAT(
-    EXTRACT(
-      YEAR FROM date), '-',
-      LPAD(EXTRACT(MONTH FROM date)::text, 2, '0'), '-',
-      LPAD(EXTRACT(DAY FROM date)::text, 2, '0')
-  ) AS "last_transaction_date"
-FROM ledger
-ORDER BY "date" DESC
-LIMIT 1
-```
 
 # Pivot Tables
 ## Running Balance
