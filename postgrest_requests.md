@@ -24,3 +24,8 @@
 ```
 10.0.0.3:5000/ledger?id=eq.51
 ```
+
+# GET Overview Function
+```
+10.0.0.3:5000/rpc/get_ledger_overview?account_id_arg=1
+```
