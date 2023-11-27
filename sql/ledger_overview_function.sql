@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION get_ledger_overview(account_id_arg INT)
   RETURNS TABLE (key TEXT, value TEXT)
-AS
-$$
+AS $$
+BEGIN
 
 
 
@@ -102,9 +102,9 @@ FROM "transaction"
 WHERE account_id = account_id_arg
 ORDER BY "date" DESC
 LIMIT 1
-) AS s
+) AS s;
 
 
 
-$$
-LANGUAGE SQL;
+END
+$$ LANGUAGE plpgsql;
